@@ -14,7 +14,7 @@ const authMiddleware = (context) => {
 
   
   // check if the operation name is "login"
-  if (context.req.body.operationName === 'login') {
+  if (context.req.body.operationName === 'login' || context.req.body.operationName === 'addUser') {
     // if it is, don't throw an error and skip the middleware
     return context;
   }
