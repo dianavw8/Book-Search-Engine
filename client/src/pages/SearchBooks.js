@@ -11,7 +11,7 @@ import { useMutation } from '@apollo/client';
 import { SAVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
-import { getSavedBookIds } from '../utils/localStorage';
+import { getSavedBookIds, saveBookIds } from '../utils/localStorage';
 import { searchGoogleBooks } from '../utils/API';
 
 const SearchBooks = () => {
@@ -85,21 +85,18 @@ const SearchBooks = () => {
         variables: { bookData: bookToSave },
         update: (cache, { data: { saveBook } }) => {
           try {
-            console.log("we trying to read the query");
-            const { me } = cache.readQuery({ query: GET_ME });
-            cache.writeQuery({
-              query: GET_ME,
-              data: { me: { ...me, savedBooks: saveBook.savedBooks } },
-            });
+            console.log('saved book');
+           
           } catch (e) {
-            console.log("error with the query");
             console.log(e);
           }
         },
       });
 
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, data.saveBook.savedBooks[data.saveBook.savedBooks.length - 1]._id]);
+      setSavedBookIds([...savedBookIds, data.saveBook.savedBooks[data.saveBook.savedBooks.length - 1].bookId]);
+      //saving to local storage
+      saveBookIds([...savedBookIds, data.saveBook.savedBooks[data.saveBook.savedBooks.length - 1].bookId]);
     } catch (err) {
       console.log("error saving the book");
       console.error(err);

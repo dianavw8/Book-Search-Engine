@@ -7,8 +7,6 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const authMiddleware = (context) => {
   let token;
-  console.log('context');
-  console.log(context.req.headers);
   // allows token to be sent via headers
   if (context.req.headers.authorization) {
     token = context.req.headers.authorization.split('Bearer ')[1];
