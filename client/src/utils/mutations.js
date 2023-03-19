@@ -43,7 +43,7 @@ export const SAVE_BOOK = gql`
       email
       savedBooks {
         title
-        author
+        authors
       }
     }
   }
@@ -57,7 +57,7 @@ export const REMOVE_BOOK = gql`
       email
       savedBooks {
         title
-        author
+        authors
       }
     }
   }

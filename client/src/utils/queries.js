@@ -33,7 +33,7 @@ export const GET_BOOKS = gql`
     books {
       id
       title
-      author
+      authors
     }
   }
 `;

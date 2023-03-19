@@ -11,12 +11,6 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  // context: ({ req }) => {
-  //   const token = req.headers.authorization || '';
-  //   // Here you can do any custom logic to extract data from the request and create a context object
-  //   return { user: getUserFromToken(token) };
-  // },
-  //context: ({ req }) => ({ req }),
   context: ({ req }) => {
     // Apply the authMiddleware to the context
     const context = { req };

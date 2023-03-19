@@ -14,6 +14,7 @@ const authMiddleware = (context) => {
     token = context.req.headers.authorization.split('Bearer ')[1];
   }
 
+  
   // check if the operation name is "login"
   if (context.req.body.operationName === 'login') {
     // if it is, don't throw an error and skip the middleware
