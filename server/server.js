@@ -1,6 +1,7 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const {authMiddleware} = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -10,6 +11,17 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  // context: ({ req }) => {
+  //   const token = req.headers.authorization || '';
+  //   // Here you can do any custom logic to extract data from the request and create a context object
+  //   return { user: getUserFromToken(token) };
+  // },
+  //context: ({ req }) => ({ req }),
+  context: ({ req }) => {
+    // Apply the authMiddleware to the context
+    const context = { req };
+    return authMiddleware(context);
+  },
 });
 
 app.use(express.urlencoded({ extended: true }));

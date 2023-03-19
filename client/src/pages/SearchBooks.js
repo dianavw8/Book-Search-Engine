@@ -7,10 +7,12 @@ import {
   Card,
   Row
 } from 'react-bootstrap';
-
+import { useMutation } from '@apollo/client';
+import { SAVE_BOOK } from '../utils/mutations';
+import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import { getSavedBookIds } from '../utils/localStorage';
+import { searchGoogleBooks } from '../utils/API';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -21,11 +23,16 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+  // useMutation hook to save books to user's account
+  const [saveBook] = useMutation(SAVE_BOOK);
+
+  // set up useEffect hook to update savedBookIds state with localStorage data
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
-  });
+    const savedIds = getSavedBookIds();
+    if (savedIds.length) {
+      setSavedBookIds(savedIds);
+    }
+  }, []);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -63,7 +70,8 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
+    console.log("bookToSave");
+    console.log(bookToSave);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -72,15 +80,28 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      console.log('we trying to save book');
+      const { data } = await saveBook({
+        variables: { bookData: bookToSave },
+        update: (cache, { data: { saveBook } }) => {
+          try {
+            console.log("we trying to read the query");
+            const { me } = cache.readQuery({ query: GET_ME });
+            cache.writeQuery({
+              query: GET_ME,
+              data: { me: { ...me, savedBooks: saveBook.savedBooks } },
+            });
+          } catch (e) {
+            console.log("error with the query");
+            console.log(e);
+          }
+        },
+      });
 
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBookIds([...savedBookIds, data.saveBook.savedBooks[data.saveBook.savedBooks.length - 1]._id]);
     } catch (err) {
+      console.log("error saving the book");
       console.error(err);
     }
   };
@@ -120,7 +141,7 @@ const SearchBooks = () => {
         </h2>
         <Row>
           {searchedBooks.map((book) => {
-            console.log(book);
+            //console.log(book);
             return (
               <Col md="4">
                 <Card key={book.bookId} border='dark'>
