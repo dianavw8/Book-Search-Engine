@@ -3,7 +3,7 @@
 ![MIT License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)
 
 ## Description
-The Book Search Engine application takes Google Books API search engine built with a RESTful API, and refactor it to be a GraphQL API built with Apollo Server. The app was built using the MERN stack, with a React front end, MongoDB database, and Node.js/Express.js server and API. It's already set up to allow users to save book searches to the back end.
+The Book Search Engine application takes Google Books API search engine built with a RESTful API, and has been refactored to be a GraphQL API built with Apollo Server. The application was built using the MERN stack, with a React front end, MongoDB database, and Node.js/Express.js server and API.
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ The Book Search Engine application takes Google Books API search engine built wi
 
 
 ## Installation
-To install my project use the following link: https://github.com/dianavw8/Tech_Blog and follow these simple directions:
+To install my project use the following link: https://github.com/dianavw8/Book-Search-Engine and follow these simple directions:
 
 Above the list of files, click on the "Code" button.
 
@@ -31,19 +31,13 @@ Press Enter to create your local clone.
 For more help and information achiving this, check out the following website: https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 
 ## Usage
-The refactored website can be found at: https://radiant-tor-97650.herokuapp.com
+The refactored website can be found at: https://frozen-journey-68896.herokuapp.com/
 
-The following image demonstrates the application's appearance and functionality in the Home page:
-![The Tech Blog image shows the home page with blogs and links to Home, Dashboard, Login](./assets/Tech_Blog_Home_.jpg)
+The following image demonstrates the application's appearance and functionality in the Home search page:
+![The Book Search Engine image shows the home search page with a search for Aliens and result of three books](./client/public/booksearch.jpg)
 
-The following image demonstrates the application's appearance and functionality in editing your blog:
-![The Tech Blog image shows the home page with blogs and links to Home, Dashboard, Login](./assets/Tech_Blog_Edit_Blog_.jpg)
-
-The following image demonstrates the application's appearance and functionality in adding a blog:
-![The Tech Blog image shows the home page with blogs and links to Home, Dashboard, Login](./assets/Tech_Blog_Add_Blog_.jpg)
-
-The following image demonstrates the application's appearance and functionality when commenting and seeing other comments on a blog:
-![The Tech Blog image shows the home page with blogs and links to Home, Dashboard, Login](./assets/Tech_Blog_Comments_.jpg)
+The following image demonstrates the application's appearance and functionality in the viewing saved books option:
+![The Book Search Engine image shows the viewing saved books with image, titles and descriptions of users saved books](./client/public/booksearchsaved.jpg)
 
 ## License
 
@@ -52,7 +46,7 @@ MIT License link: https://github.com/babel/babel/blob/master/LICENSE
 
 ## Contributing
 
-The following are contributers to the making of the Tech Blog project:
+The following are contributers to the making of the Book Search Engine project:
 
 https://shields.io/
 
